@@ -1,1 +1,30 @@
+CREATE TABLE folders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL
+);
+
+CREATE TABLE notes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    folder_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (folder_id) REFERENCES folders(id)
+);
+
+CREATE TABLE note_content (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    note_id INTEGER NOT NULL,
+    content_type TEXT CHECK(content_type IN ('text', 'drawing')),
+    content TEXT,
+    FOREIGN KEY (note_id) REFERENCES notes(id)
+);
+
+CREATE TABLE images (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    note_id INTEGER NOT NULL,
+    file_path TEXT,
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (note_id) REFERENCES notes(id)
+);
 
