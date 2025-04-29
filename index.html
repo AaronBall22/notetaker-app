@@ -11,10 +11,12 @@
         <h2>Folders</h2>
         <button onclick="createFolder()">➕ New Folder</button>
         <button onclick="deleteFolder()">🗑️ Delete Folder</button>
-        <ul id="folderList">
-          <!-- folders will go here -->
-        </ul>
+        <ul id="folderList"></ul>
+
+        <h2>Notes</h2>
+        <ul id="noteList"></ul>
       </aside>
+
       <main class="main">
         <header class="header">
           <h1>Blank's Notes</h1>
@@ -36,7 +38,6 @@
     </div>
 
     <input type="file" id="imageUploadInput" accept="image/*" class="hidden" />
-
     <script src="app.js"></script>
   </body>
 </html>
