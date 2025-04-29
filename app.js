@@ -20,6 +20,32 @@ function loadFolders() {
   });
 }
 
+function loadNotes() {
+  const noteList = document.getElementById("noteList");
+  noteList.innerHTML = "";
+
+  if (!currentFolder) {
+    noteList.innerHTML = "<li><em>Select a folder</em></li>";
+    return;
+  }
+
+  let found = false;
+  for (let key in localStorage) {
+    if (key.startsWith(currentFolder + "-")) {
+      const noteName = key.substring(currentFolder.length + 1);
+      const li = document.createElement("li");
+      li.textContent = noteName;
+      li.onclick = () => openNote(noteName);
+      noteList.appendChild(li);
+      found = true;
+    }
+  }
+
+  if (!found) {
+    noteList.innerHTML = "<li><em>No notes yet</em></li>";
+  }
+}
+
 function createFolder() {
   const folderName = prompt("Enter new folder name:");
   if (folderName && !folders.includes(folderName)) {
@@ -54,6 +80,7 @@ function deleteFolder() {
     }
 
     loadFolders();
+    loadNotes();
     alert(`Folder "${folderName}" deleted.`);
   } else {
     alert("Folder not found.");
@@ -63,9 +90,9 @@ function deleteFolder() {
 function openFolder(folderName) {
   currentFolder = folderName;
   showTextEditor();
-  document.getElementById(
-    "noteArea"
-  ).innerText = `Opened folder: ${folderName}. Create a new note or select an existing one.`;
+  document.getElementById("noteArea").innerText =
+    "Select a note or create a new one.";
+  loadNotes();
 }
 
 function createNote() {
@@ -79,6 +106,7 @@ function createNote() {
     localStorage.setItem(noteKey, "");
     showTextEditor();
     document.getElementById("noteArea").innerText = "";
+    loadNotes();
   }
 }
 
@@ -92,7 +120,16 @@ function deleteNote() {
     const noteKey = `${currentFolder}-${noteName}`;
     localStorage.removeItem(noteKey);
     document.getElementById("noteArea").innerText = "Note deleted.";
+    loadNotes();
   }
+}
+
+function openNote(noteName) {
+  if (!currentFolder) return;
+  const key = `${currentFolder}-${noteName}`;
+  const content = localStorage.getItem(key) || "";
+  showTextEditor();
+  document.getElementById("noteArea").innerText = content;
 }
 
 function setMode(newMode) {
@@ -147,6 +184,7 @@ function showTextEditor() {
 
 window.onload = () => {
   loadFolders();
+  loadNotes();
   setupDrawing();
 };
 
