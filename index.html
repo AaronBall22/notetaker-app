@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blank's Notes</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <h2>Folders</h2>
+        <button onclick="createFolder()">➕ New Folder</button>
+        <button onclick="deleteFolder()">🗑️ Delete Folder</button>
+        <ul id="folderList">
+          <!-- folders will go here -->
+        </ul>
+      </aside>
+      <main class="main">
+        <header class="header">
+          <h1>Blank's Notes</h1>
+          <div class="actions">
+            <button onclick="createNote()">➕</button>
+            <button onclick="deleteNote()">🗑️</button>
+          </div>
+        </header>
+        <div class="tools">
+          <button onclick="setMode('draw')">Draw</button>
+          <button onclick="setMode('text')">Text</button>
+          <button onclick="uploadImage()">Upload Image</button>
+        </div>
+        <div id="noteArea" contenteditable="true" class="note-area">
+          Select or create a note!
+        </div>
+        <canvas id="drawCanvas" class="hidden"></canvas>
+      </main>
+    </div>
+
+    <input type="file" id="imageUploadInput" accept="image/*" class="hidden" />
+
+    <script src="app.js"></script>
+  </body>
+</html>
